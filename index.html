@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>绩点计算器 - 沈阳航空航天大学</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="plugins/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="css/skins/_all-skins.min.css">
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="#" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>GPA</b></span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>沈航</b> 绩点计算器</span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="img/sau-logo.png" alt="User Image">
+                </div>
+                <div class="pull-left info">
+                    <p>版本：V1.0</p>
+                    <p>作者：喝酒不骑马</p>
+                </div>
+            </div>
+
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-dashboard"></i> <span>绩点计算器</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>计算器
+                <small> 沈航学生专用</small>
+                <small> (Tips：优秀 = 90，良好 = 80，中等 = 70，及格 = 60)</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+                <li class="active">绩点计算器</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-lg-12 col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">成绩填写</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="input-area">
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12 col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">计算结果</h3>
+                        </div>
+                        <div class="box-body">
+                            <h4 id="output-gpa"></h4>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <p>
+                <button type="button" class="btn btn-info margin" onclick="addSubject()">添加学科 +</button>
+                <button type="button" class="btn btn-danger margin" onclick="removeLastRow()">删除学科 -</button>
+                <button type="button" class="btn btn-success margin" onclick="calGpa()">计算学分</button>
+                <button type="button" class="btn bg-purple margin" onclick="init()">重置</button>
+            </p>
+
+            <p>
+                如有问题，请联系 myz9412@163.com
+            </p>
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 2.4.0
+        </div>
+        <strong>Copyright &copy; 2011-2018 TalkingData</a>.</strong> All rights
+        reserved.
+    </footer>
+
+    <div class="modal fade" id="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>查询中</p>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 3 -->
+<script src="plugins/jquery/dist/jquery.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+
+<!-- Bootstrap 3.3.7 -->
+<script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- AdminLTE App -->
+<script src="js/adminlte.min.js"></script>
+<script>
+    let subjectNums = -1;
+
+    let subScoreCredit;
+    let totalCredit;
+
+    /**
+     * 初始化
+     */
+    $(function () {
+        addSubject();
+    });
+
+    /**
+     * 初始化
+     */
+    function init() {
+        $('#input-area').html('');
+        $('#output-gpa').html('');
+        subjectNums = -1;
+        addSubject();
+    }
+
+    /**
+     * 添加一行
+     */
+    function addSubject() {
+        subjectNums++;
+        let htmlStr = '<div id="row-' + subjectNums + '">\n' +
+            '                                    <div class="col-lg-4 col-xs-4">\n' +
+            '                                        <div class="form-group">\n' +
+            '                                            <input type="text" class="form-control" placeholder="学科名（可不填）">\n' +
+            '                                        </div>\n' +
+            '                                    </div>\n' +
+            '                                    <div class="col-lg-4 col-xs-4">\n' +
+            '                                        <div class="form-group">\n' +
+            '                                            <input id="sub-score-' + subjectNums + '" type="number" class="form-control" placeholder="分数（必填）">\n' +
+            '                                        </div>\n' +
+            '                                    </div>\n' +
+            '                                    <div class="col-lg-4 col-xs-4">\n' +
+            '                                        <div class="form-group">\n' +
+            '                                            <input id="sub-credit-' + subjectNums + '" type="number" class="form-control" placeholder="学分（必填）">\n' +
+            '                                        </div>\n' +
+            '                                    </div>\n' +
+            '                                </div>';
+        $('#input-area').append(htmlStr);
+
+    }
+
+    /**
+     * 删除最后一行
+     */
+    function removeLastRow() {
+        if (subjectNums == -1) {
+            return;
+        }
+        $('#row-' + subjectNums).remove();
+        subjectNums--;
+    }
+
+    /**
+     * 计算学分
+     */
+    function calGpa() {
+        subScoreCredit = parseFloat(0);
+        totalCredit = parseFloat(0);
+        for (let i = 0; i <= subjectNums; i++) {
+            let score = $('#sub-score-' + i).val();
+            let credit = $('#sub-credit-' + i).val();
+            if (score && credit) {
+                if (score < 50) {
+                    score = 50;
+                }
+                if (credit < 0) {
+                    credit = 0;
+                }
+                subScoreCredit += (score - 50) * 0.2 * credit;
+                totalCredit += parseFloat(credit);
+            }
+        }
+
+        let gpa = subScoreCredit / totalCredit;
+        if (isNaN(gpa)) {
+            $('#output-gpa').html('填写有误！');
+        } else {
+            $('#output-gpa').html('学分为： ' + gpa.toFixed(2));
+        }
+
+    }
+</script>
+</body>
+</html>
