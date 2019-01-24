@@ -183,23 +183,24 @@
      */
     function addSubject() {
         subjectNums++;
-        let htmlStr = '<div id="row-' + subjectNums + '">\n' +
-            '                                    <div class="col-lg-4 col-xs-4">\n' +
-            '                                        <div class="form-group">\n' +
-            '                                            <input type="text" class="form-control" placeholder="学科名（可不填）">\n' +
-            '                                        </div>\n' +
-            '                                    </div>\n' +
-            '                                    <div class="col-lg-4 col-xs-4">\n' +
-            '                                        <div class="form-group">\n' +
-            '                                            <input id="sub-score-' + subjectNums + '" type="number" class="form-control" placeholder="分数（必填）">\n' +
-            '                                        </div>\n' +
-            '                                    </div>\n' +
-            '                                    <div class="col-lg-4 col-xs-4">\n' +
-            '                                        <div class="form-group">\n' +
-            '                                            <input id="sub-credit-' + subjectNums + '" type="number" class="form-control" placeholder="学分（必填）">\n' +
-            '                                        </div>\n' +
-            '                                    </div>\n' +
-            '                                </div>';
+        let htmlStr =
+            '<div id="row-' + subjectNums + '">\n' +
+            '    <div class="col-lg-4 col-xs-4">\n' +
+            '        <div class="form-group">\n' +
+            '            <input type="text" class="form-control" placeholder="学科名（可不填）">\n' +
+            '        </div>\n' +
+            '    </div>\n' +
+            '    <div class="col-lg-4 col-xs-4">\n' +
+            '        <div class="form-group">\n' +
+            '            <input id="sub-score-' + subjectNums + '" type="number" class="form-control" placeholder="分数（必填）">\n' +
+            '        </div>\n' +
+            '    </div>\n' +
+            '    <div class="col-lg-4 col-xs-4">\n' +
+            '        <div class="form-group">\n' +
+            '            <input id="sub-credit-' + subjectNums + '" type="number" class="form-control" placeholder="学分（必填）">\n' +
+            '        </div>\n' +
+            '    </div>\n' +
+            '</div>';
         $('#input-area').append(htmlStr);
 
     }
