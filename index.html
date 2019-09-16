@@ -69,7 +69,7 @@
         <section class="content-header">
             <h1>绩点计算器
                 <small> 沈航学生专用</small>
-                <small> (Tips：优秀 = 90，良好 = 80，中等 = 70，及格 = 60)</small>
+                <small> (Tips：评级类学科分数填写方法 - 优秀 = 95，良好 = 85，中等 = 75，及格 = 65，不及格 = 0)</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
@@ -86,6 +86,18 @@
                             <h3 class="box-title">成绩填写</h3>
                         </div>
                         <div class="box-body">
+                            <div class="col-lg-4 col-xs-4">
+                                <div class="form-group">学科
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-xs-4">
+                                <div class="form-group">分数
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-xs-4">
+                                <div class="form-group">学分
+                                </div>
+                            </div>
                             <div id="input-area">
                             </div>
                         </div>
@@ -117,7 +129,7 @@
             </p>
 
             <p>
-                如有问题，请联系 myz9412@163.com
+                如有问题，请提交 issues 或联系 mayuzhe1222@qq.com
             </p>
 
         </section>
@@ -226,16 +238,23 @@
             let score = $('#sub-score-' + i).val();
             let credit = $('#sub-credit-' + i).val();
             if (score && credit) {
-                if (score < 50) {
-                    score = 50;
-                }
                 if (credit < 0) {
                     credit = 0;
                 }
-                subScoreCredit += (score - 50) * 0.2 * credit;
+                let scoreCredit;
+                if (score - 60 < 0) {
+                    scoreCredit = 0;
+                } else {
+                    scoreCredit = 2 + (score - 60) * 0.2;
+                }
+                subScoreCredit += scoreCredit * credit;
                 totalCredit += parseFloat(credit);
             }
         }
+
+        console.info(subScoreCredit);
+        console.info(totalCredit);
+
 
         let gpa = subScoreCredit / totalCredit;
         if (isNaN(gpa)) {
